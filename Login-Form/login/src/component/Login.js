@@ -6,7 +6,7 @@ class Login extends Component {
         super();
         this.state = {
             users: [],
-            error: []
+            error: {}
         };
     }
 
@@ -15,9 +15,6 @@ class Login extends Component {
         return pattern.test(email);
     };
 
-    if() {
-
-    }
     Addform = () => {
         const name = this.nameInput.value;
         const email = this.emailInput.value;
@@ -29,45 +26,50 @@ class Login extends Component {
         let error = {};
 
         if (!name) {
-            error.name = "*name is required"
+            error.name = "* Name is required";
         }
 
-        // if (!name || !email || !userName || !password || !rp) {
-        //     alert("Please fill all the fields");
-        //     return;
-        // }
-
-        if (!this.validateEmail(email)) {
-            error.email = "please give valid email"
+        if (!email || !this.validateEmail(email)) {
+            error.email = "* Please enter a valid email";
         }
 
-        if (password.length == 0) {
-            error.password = "*password is required"
+        if (!userName) {
+            error.userName = "* Username is required";
         }
-        // else if (password.length > 6 && password.length < 10) {
-        //     error.password = "*password should between 6 to 10"
-        // }
 
-        if (password !== rp) {
-            alert("Password does not match Repeat Password");
-            return;
+        if (!password) {
+            error.password = "* Password is required";
+        } else if (password.length < 6 || password.length > 10) {
+            error.password = "* Password must be 6 to 10 characters long";
+        }
+
+        if (!rp) {
+            error.repeatPassword = "* Repeat Password is required";
+        } else if (password !== rp) {
+            error.repeatPassword = "* Passwords do not match";
         }
 
         if (!check.checked) {
-            error.checkbox = "* please tick the checkbox"
-        } else {
-            this.setState({ error })
-
-            const newUser = { name, email, userName, password };
-
-            this.setState((prevState) => ({
-                users: [...prevState.users, newUser],
-            }));
+            error.checkbox = "* Please agree to the terms";
         }
 
+        if (Object.keys(error).length > 0) {
+            this.setState({ error });
+            return;
+        }
 
+        const newUser = { name, email, userName, password };
+        this.setState((prevState) => ({
+            users: [...prevState.users, newUser],
+            error: {}
+        }));
 
-
+        this.nameInput.value = "";
+        this.emailInput.value = "";
+        this.userInput.value = "";
+        this.passwordInput.value = "";
+        this.repeatInput.value = "";
+        this.checkInput.checked = false;
     };
 
     render() {
@@ -75,9 +77,9 @@ class Login extends Component {
             <div className="container my-5">
                 <div className="login-box">
                     <div className="image-box">
-
                         <img
                             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRW5-AsrvEBIuPK69udkKIT0ZvqkqYx5M83oQ&s"
+                            alt="signup"
                         />
                     </div>
 
@@ -92,10 +94,8 @@ class Login extends Component {
                             />
                             <small style={{ color: "red" }}>{this.state.error.name}</small>
 
-                            <label htmlFor="email">Email</label>
+                            <label>Email</label>
                             <input
-                                name="email"
-                                id="email"
                                 type="email"
                                 placeholder="Email..."
                                 ref={(ref) => (this.emailInput = ref)}
@@ -108,6 +108,7 @@ class Login extends Component {
                                 placeholder="Username..."
                                 ref={(ref) => (this.userInput = ref)}
                             />
+                            <small style={{ color: "red" }}>{this.state.error.userName}</small>
 
                             <label>Password</label>
                             <input
@@ -123,21 +124,21 @@ class Login extends Component {
                                 placeholder="***********"
                                 ref={(ref) => (this.repeatInput = ref)}
                             />
+                            <small style={{ color: "red" }}>{this.state.error.repeatPassword}</small>
 
                             <div className="checkbox-area">
-                                <input type="checkbox" required ref={(ref) => (this.checkInput = ref)} />
+                                <input type="checkbox" ref={(ref) => (this.checkInput = ref)} />
                                 <span>I agree to the terms of user</span>
                             </div>
                             <small style={{ color: "red" }}>{this.state.error.checkbox}</small>
 
-
-                            <div>
+                            <div className="mt-2">
                                 <button type="button" onClick={this.Addform}>
                                     Sign Up
                                 </button>
 
-                                <button style={{ backgroundColor: "white", color: "black" }} onClick={this.Addform}>
-                                    Sign In →
+                                <button type="button" style={{ backgroundColor: "white", color: "black" }}>
+                                    Sign in →
                                 </button>
                             </div>
                         </form>
@@ -166,7 +167,7 @@ class Login extends Component {
                                                 <td>{user.name}</td>
                                                 <td>{user.email}</td>
                                                 <td>{user.userName}</td>
-                                                <td>{user.password}</td>
+                                                <td>*******</td> {/* Masked password */}
                                             </tr>
                                         ))}
                                     </tbody>

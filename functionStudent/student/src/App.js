@@ -32,7 +32,12 @@ function App() {
     }
   }
 
-  const remove = () => {
+  const remove = (roll) => {
+    if (window.confirm("Do you want to delete")) {
+      let index = studentList.findIndex((student) => { return student.Rollnumber == roll });
+      studentList.splice(index, 1);
+      setstudentList([...studentList]);
+    }
 
   }
 
@@ -114,7 +119,7 @@ function App() {
                 <td>{student.name}</td>
                 <td>{student.Branch}</td>
                 <td>{student.Contact}</td>
-                <td><button className='btn btn-danger' onClick={remove}>Remove</button></td>
+                <td><button className='btn btn-danger' onClick={() => remove(student.Rollnumber)}>Remove</button></td>
               </tr>
             })}
           </tbody>
