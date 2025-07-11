@@ -66,7 +66,6 @@ function Table() {
                         <td>status</td>
                     </tr>
                 </thead>
-
                 <tbody>
                     {taskData.filter((task) => { return task.taskStatus == defaultStatus }).sort((a, b) => { return b.pid - a.pid }).map((task, index) => {
                         return <tr key={index} className={task.pid == 3 ? "bg-danger text-center" : task.pid == 2 ? "bg-success text-center" : "bg-primary text-center"} >
