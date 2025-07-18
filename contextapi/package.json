@@ -1,5 +1,5 @@
 {
-  "name": "to-do",
+  "name": "contextapi",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -9,11 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-<<<<<<< HEAD
-    "react-scripts": "^5.0.1",
-=======
     "react-scripts": "5.0.1",
->>>>>>> dff1ce8ee4ddec0352ce0e879630e12f26095c68
     "web-vitals": "^2.1.4"
   },
   "scripts": {

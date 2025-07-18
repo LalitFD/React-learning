@@ -17,7 +17,7 @@ function App() {
         <button onClick={() => setColor("black")} className='m-2 rounded  text-white' style={{ backgroundColor: "black" }}>Black</button>
         <button onClick={() => setColor("orange")} className=' m-2 rounded  text-white' style={{ backgroundColor: "orange" }}>orange</button>
         <button onClick={() => setColor("green")} className='m-2 rounded  text-white' style={{ backgroundColor: "green" }}>green</button>
-        
+
       </div>
     </div>
   </>
